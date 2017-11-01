@@ -7,14 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
-@EnableAutoConfiguration
 public class FastsparkApplication {
-
-    @RequestMapping("/client")
-    public String getRequest() {
-        return "hello world";
-    }
     public static void main(String[] args) {
         SpringApplication.run(FastsparkApplication.class, args);
 

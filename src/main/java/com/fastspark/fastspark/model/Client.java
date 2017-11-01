@@ -1,4 +1,4 @@
-package model;
+package com.fastspark.fastspark.model;
 
 import java.util.ArrayList;
 import java.util.Map;

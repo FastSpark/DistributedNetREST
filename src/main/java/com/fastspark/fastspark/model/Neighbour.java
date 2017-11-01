@@ -1,4 +1,4 @@
-package model;
+package com.fastspark.fastspark.model;
 
 /**
  * Created by Buddhi on 11/1/2017.
