@@ -1,5 +1,9 @@
 package com.fastspark.fastspark.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 import java.net.*;
 import java.sql.Timestamp;
@@ -12,6 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Buddhi on 11/1/2017.
  */
+
 public class Client {
 
     private int k;
@@ -43,6 +48,7 @@ public class Client {
 
     private DatagramSocket datagramSocket;
 
+    @Autowired
     public Client(int k, int myBucketId, String ip, int port, Map<String, ArrayList<String>> fileDictionary, ArrayList<String> myFileList, DatagramSocket datagramSocket) throws SocketException {
         this.k = k; // get from main
         this.myBucketId = myBucketId;
@@ -406,11 +412,22 @@ public class Client {
     }
 
     public void multicast(String message, ArrayList<Node> nodesList) throws SocketException, UnknownHostException, IOException {
-        //
+
+        RestTemplate restTemplate = new RestTemplate();
+        for (Node node : nodesList) {
+            String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
+            Message sendMessage = new Message(node.getIp(), node.getPort(), message);
+            Message response = restTemplate.postForObject( uri,sendMessage ,Message.class);
+            this.handleMessage(response.getMessage());
+        }
     }
 
     public void unicast(String message, Node node) throws SocketException, UnknownHostException, IOException {
-        //
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
+        Message sendMessage = new Message(node.getIp(), node.getPort(), message);
+        Message response = restTemplate.postForObject( uri,sendMessage ,Message.class);
+        this.handleMessage(response.getMessage());
     }
 
     //gracefull leave
@@ -476,6 +493,46 @@ public class Client {
 
     void sendMessageToAPI(String message) {
         //call to REST api calls
+    }
+
+
+
+    public String handleMessage(String message) throws IOException {
+        String[] messagePart = message.split(" ");
+        switch (messagePart[1]) {
+            case "REGOK":
+                //handle  response from bootstrap
+                System.out.println(message);
+                this.handleRegisterResponse(message);
+                break;
+            case "UNROK": // handle unregister response
+                break;
+            case "JOINOK": // join response message
+                break;
+            case "LEAVEOK": // leave response message
+                break;
+            case "SEROK": // search response message
+                break;
+            case "HEARTBEATOK": //haddle hearbeat ok
+                System.out.println(message);
+                this.handleHeartBeatResponse(message);
+                break;
+            case "HEARTBEAT":
+                System.out.println(message);
+                this.sendHeartBeatReply(message);
+                break;
+            //this.client.
+            case "FBM": //multicast message to find a node from a bucket
+                System.out.println(message);
+                this.findNodeFromBucketReply(Integer.parseInt(messagePart[2]),new Node(this.getIp(), this.getPort()));
+                break;
+            case "FBMOK": //reply to FBM
+                this.receiveReplyFindNodeFromBucket(message);
+                break;
+
+        }
+
+        return message;
     }
 
 }

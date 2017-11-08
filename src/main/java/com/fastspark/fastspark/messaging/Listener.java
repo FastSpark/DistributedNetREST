@@ -13,19 +13,20 @@ import java.util.logging.Logger;
  * Created by Gimhani Uthpala on 11/8/2017.
  */
 public class Listener implements Runnable {
-    Client clientFrame;
+
+    Client client;
 
     @Autowired
     MessagingInterface messagingInterface;
 
-    public Listener(Client clientFrame) {
-        this.clientFrame = clientFrame;
+    public Listener(Client client) {
+        this.client=client;
     }
 
     @Override
     public void run() {
         try {
-            listen(this.clientFrame); //To change body of generated methods, choose Tools | Templates.
+            listen(this.client); //To change body of generated methods, choose Tools | Templates.
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,7 +50,7 @@ public class Listener implements Runnable {
             String message = new String(packet.getData(), 0, packet.getLength());
             System.out.println("Message Recieved : " + message);
 
-            messagingInterface.handleMessage(message);
+            client.handleMessage(message);
 
         }
     }

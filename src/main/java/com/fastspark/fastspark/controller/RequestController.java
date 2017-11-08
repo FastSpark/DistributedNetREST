@@ -1,6 +1,7 @@
 package com.fastspark.fastspark.controller;
 
 import com.fastspark.fastspark.messaging.MessagingInterface;
+import com.fastspark.fastspark.model.Client;
 import com.fastspark.fastspark.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,8 +23,8 @@ import java.net.InetAddress;
 @EnableAutoConfiguration
 public class RequestController {
 
-    @Autowired
-    MessagingInterface messagingInterface;
+
+    Client client;
     @Autowired
     Environment environment;
 
@@ -31,7 +32,7 @@ public class RequestController {
     public String getRequest(@PathParam("message") String message) {
         MessagingInterface messagingInterface = new MessagingInterface();
         try {
-            return messagingInterface.handleMessage(message);
+            return client.handleMessage(message);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,11 +41,11 @@ public class RequestController {
 
 
 
-    @RequestMapping(value = "/client/search/{filename}", method = RequestMethod.POST)
+    @RequestMapping(value = "/request", method = RequestMethod.POST)
     public Message doTask(@RequestBody Message message)
     {
         try {
-            String reply = messagingInterface.handleMessage(message.getMessage());
+            String reply = client.handleMessage(message.getMessage());
             return new Message(InetAddress.getLocalHost().getHostAddress(),Integer.valueOf(environment.getProperty("SERVER_PORT")),reply);
         } catch (IOException e) {
             e.printStackTrace();
