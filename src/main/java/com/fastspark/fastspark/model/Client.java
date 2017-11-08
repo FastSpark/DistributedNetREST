@@ -24,6 +24,23 @@ public class Client {
     private Timestamp timestamp;
     private ArrayList<String> myFileList;
     private ArrayList<Node> myNodeList;
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public DatagramSocket getDatagramSocket() {
+        return datagramSocket;
+    }
+
+    public void setDatagramSocket(DatagramSocket datagramSocket) {
+        this.datagramSocket = datagramSocket;
+    }
+
     private DatagramSocket datagramSocket;
 
     public Client(int k, int myBucketId, String ip, int port, Map<String, ArrayList<String>> fileDictionary, ArrayList<String> myFileList, DatagramSocket datagramSocket) throws SocketException {
