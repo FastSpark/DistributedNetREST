@@ -48,6 +48,8 @@ public class BootstrapServer {
                     } else {
                         boolean isOkay = true;
                         for (int i = 0; i < nodes.size(); i++) {
+
+
                             if (nodes.get(i).getPort() == port) {
                                 if (nodes.get(i).getUsername().equals(username)) {
                                     reply += "9998";

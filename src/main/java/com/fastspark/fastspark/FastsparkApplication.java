@@ -73,7 +73,7 @@ public class FastsparkApplication {
 
 
             Map<String, Object> map = new HashMap<>();
-            map.put("SERVER_PORT", input);
+            map.put("server.port", input);
             application.setDefaultProperties(map);
             application.run(args);
 

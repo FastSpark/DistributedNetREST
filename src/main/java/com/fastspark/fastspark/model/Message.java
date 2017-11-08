@@ -1,9 +1,15 @@
 package com.fastspark.fastspark.model;
 
+import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+
 /**
  * Created by Buddhi on 11/1/2017.
  */
-public class Message {
+
+public class Message implements Serializable{
     private String fromIp;
     private int fromPort;
     private String message;
@@ -14,6 +20,8 @@ public class Message {
         this.message = message;
 
     }
+
+    public Message(){}
 
     public String getFromIp() {
         return fromIp;

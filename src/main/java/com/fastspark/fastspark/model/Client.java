@@ -1,6 +1,8 @@
 package com.fastspark.fastspark.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -157,7 +159,7 @@ public class Client {
 
     public void initialize() {
         // Register With Bootstrap Server
-        String msg = " REG " + this.ip + " " + this.port;
+        String msg = " REG " + this.ip + " " + this.port+" "+this.username;
         msg = "00" + Integer.toString(msg.length()) + msg;
 
         sendMessage(msg);
@@ -416,6 +418,7 @@ public class Client {
     public void multicast(String message, ArrayList<Node> nodesList) throws SocketException, UnknownHostException, IOException {
 
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         for (Node node : nodesList) {
             String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
             Message sendMessage = new Message(node.getIp(), node.getPort(), message);
@@ -426,10 +429,15 @@ public class Client {
 
     public void unicast(String message, Node node) throws SocketException, UnknownHostException, IOException {
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
         Message sendMessage = new Message(node.getIp(), node.getPort(), message);
         Message response = restTemplate.postForObject( uri,sendMessage ,Message.class);
-        this.handleMessage(response.getMessage());
+        System.out.println(response);
+        if(response!=null) {
+
+            this.handleMessage(response.getMessage());
+        }
     }
 
     //gracefull leave
@@ -506,6 +514,7 @@ public class Client {
                 //handle  response from bootstrap
                 System.out.println(message);
                 this.handleRegisterResponse(message);
+
                 break;
             case "UNROK": // handle unregister response
                 break;
@@ -534,7 +543,7 @@ public class Client {
 
         }
 
-        return message;
+        return null;
     }
 
 }
