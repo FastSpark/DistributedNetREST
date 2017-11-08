@@ -5,15 +5,14 @@ package com.fastspark.fastspark.model;
  */
 public class Message {
     private String fromIp;
-    private String fromPort;
-    private String messageType;
-    private String messageLength;
+    private int fromPort;
+    private String message;
 
-    public Message(String fromIp, String fromPort, String messageType, String messageLength) {
+    public Message(String fromIp, int fromPort, String message) {
         this.fromIp = fromIp;
         this.fromPort = fromPort;
-        this.messageType = messageType;
-        this.messageLength = messageLength;
+        this.message = message;
+
     }
 
     public String getFromIp() {
@@ -24,27 +23,19 @@ public class Message {
         this.fromIp = fromIp;
     }
 
-    public String getFromPort() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getFromPort() {
         return fromPort;
     }
 
-    public void setFromPort(String fromPort) {
+    public void setFromPort(int fromPort) {
         this.fromPort = fromPort;
-    }
-
-    public String getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
-    }
-
-    public String getMessageLength() {
-        return messageLength;
-    }
-
-    public void setMessageLength(String messageLength) {
-        this.messageLength = messageLength;
     }
 }
