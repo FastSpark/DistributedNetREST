@@ -155,7 +155,7 @@ public class Client {
 
     public void initialize() {
         // Register With Bootstrap Server
-        String msg = " REG " + this.ip + " " + this.port ;
+        String msg = " REG " + this.ip + " " + this.port;
         msg = "00" + Integer.toString(msg.length()) + msg;
 
         sendMessage(msg);
