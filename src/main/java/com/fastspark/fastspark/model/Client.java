@@ -49,13 +49,13 @@ public class Client {
     private DatagramSocket datagramSocket;
 
     @Autowired
-    public Client(int k, int myBucketId, String ip, int port, Map<String, ArrayList<String>> fileDictionary, ArrayList<String> myFileList, DatagramSocket datagramSocket) throws SocketException {
+    public Client(int k, int myBucketId, String ip, int port,String  username, Map<String, ArrayList<String>> fileDictionary, ArrayList<String> myFileList, DatagramSocket datagramSocket) throws SocketException {
         this.k = k; // get from main
         this.myBucketId = myBucketId;
         //this.status = "0";
         this.ip = ip;
         this.port = port;
-       // this.userName = username;
+       this.username = username;
         this.bucketTable = new HashMap<>();
         this.fileDictionary = fileDictionary;
         this.myFileList = myFileList;
@@ -76,6 +76,8 @@ public class Client {
     public String getIp() {
         return ip;
     }
+
+
 
     public void setIp(String ip) {
         this.ip = ip;

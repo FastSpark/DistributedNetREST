@@ -104,9 +104,9 @@ public class FastsparkApplication {
             }
             //end of initializing files
 
-            DatagramSocket datagramSocket = new DatagramSocket(port);
+            DatagramSocket datagramSocket = new DatagramSocket(port-1);
 
-            Client client = new Client(k, myBucketId, ip, port, fileDictionary, myFileList, datagramSocket);
+            Client client = new Client(k, myBucketId, ip, port, address,fileDictionary, myFileList, datagramSocket);
             client.initialize();
 
             Thread thread = new Thread(new Listener(client));
