@@ -418,18 +418,16 @@ public class Client {
     public void multicast(String message, ArrayList<Node> nodesList) throws SocketException, UnknownHostException, IOException {
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         for (Node node : nodesList) {
             String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
             Message sendMessage = new Message(node.getIp(), node.getPort(), message);
-            Message response = restTemplate.postForObject( uri,sendMessage ,Message.class);
+            Message response = restTemplate.postForObject(uri,sendMessage ,Message.class);
             this.handleMessage(response.getMessage());
         }
     }
 
     public void unicast(String message, Node node) throws SocketException, UnknownHostException, IOException {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = "http://"+node.getIp()+":"+node.getPort()+"/request";
         Message sendMessage = new Message(node.getIp(), node.getPort(), message);
         Message response = restTemplate.postForObject( uri,sendMessage ,Message.class);
