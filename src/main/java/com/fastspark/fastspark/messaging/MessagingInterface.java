@@ -13,14 +13,4 @@ import java.io.IOException;
 public class MessagingInterface {
     Client client;
 
-<<<<<<< HEAD
-    //handle message function
-    public String HandleMessage(String message) {
-        return message;
-    }
 }
-=======
-
-
-}
->>>>>>> dd8bd9eb6b990879a78ca2c64f13e60a86beeaab
