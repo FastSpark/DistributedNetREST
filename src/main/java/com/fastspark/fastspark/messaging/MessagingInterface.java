@@ -5,8 +5,8 @@ package com.fastspark.fastspark.messaging;
  */
 public class MessagingInterface {
 
+    //handle message function
     public String HandleMessage(String message) {
-
         return message;
     }
 }

@@ -1,50 +1,57 @@
 package com.fastspark.fastspark.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.stereotype.Component;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+
 /**
  * Created by Buddhi on 11/1/2017.
  */
-public class Message {
-    private String fromIp;
-    private String fromPort;
-    private String messageType;
-    private String messageLength;
 
-    public Message(String fromIp, String fromPort, String messageType, String messageLength) {
+@XmlRootElement
+public class Message implements Serializable{
+    private String fromIp;
+    private int fromPort;
+    private String message;
+
+    public Message(String fromIp, int fromPort, String message) {
         this.fromIp = fromIp;
         this.fromPort = fromPort;
-        this.messageType = messageType;
-        this.messageLength = messageLength;
+        this.message = message;
+
     }
 
+    public Message(){}
+
+    @JsonProperty
     public String getFromIp() {
         return fromIp;
     }
+
 
     public void setFromIp(String fromIp) {
         this.fromIp = fromIp;
     }
 
-    public String getFromPort() {
+
+    @JsonProperty
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @JsonProperty
+    public int getFromPort() {
         return fromPort;
     }
 
-    public void setFromPort(String fromPort) {
+    public void setFromPort(int fromPort) {
         this.fromPort = fromPort;
-    }
-
-    public String getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
-    }
-
-    public String getMessageLength() {
-        return messageLength;
-    }
-
-    public void setMessageLength(String messageLength) {
-        this.messageLength = messageLength;
     }
 }
