@@ -7,7 +7,6 @@ public class MessagingInterface {
 
     public String HandleMessage(String message) {
 
-
         return message;
     }
 }
